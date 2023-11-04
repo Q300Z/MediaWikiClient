@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="using:MediaWikiClient.Models"
+             x:Class="MediaWikiClient.SearchPage">
+
+    <VerticalStackLayout
+        Spacing="15"
+        Padding="30,0"
+        VerticalOptions="Start">
+
+        <Image
+            Source="mediawiki.png"
+            SemanticProperties.Description="Logo de MediaWiki"
+            Aspect="Center"
+            HorizontalOptions="Center" />
+
+        <Label
+            Text="Bienvenue sur le Client MediaWiki"
+            SemanticProperties.HeadingLevel="Level1"
+            FontSize="32"
+            HorizontalOptions="Center" />
+
+        <Label
+            Text="Faite votre recherche dans la barre de recherche ci-dessous :"
+            SemanticProperties.HeadingLevel="Level2"
+            SemanticProperties.Description="Faite votre recherhce dans la barre de recherche ci-dessous"
+            FontSize="18"
+            HorizontalOptions="Center" />
+        <SearchBar x:Name="SearchBar" TextChanged="SearchBar_OnTextChanged"
+                   HorizontalOptions="Center" WidthRequest="500" />
+        <CollectionView x:Name="SearchResults" ItemsSource="{Binding Articles}"
+                        SelectionMode="Single" SelectionChanged="SearchResults_OnSelectionChanged"
+                        VerticalOptions="Fill" HorizontalOptions="Center" WidthRequest="500">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Article">
+                    <Grid Padding="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Text="{Binding Titre}"
+                               VerticalTextAlignment="Center" />
+                        <Image Grid.Column="1" Source="database.png" VerticalOptions="Center"
+                               HorizontalOptions="End" HeightRequest="25">
+                            <Image.Triggers>
+                                <DataTrigger TargetType="Image" Binding="{Binding InDatabase}"
+                                             Value="False">
+                                    <Setter Property="Source" Value="nuage.png" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+
+</ContentPage>

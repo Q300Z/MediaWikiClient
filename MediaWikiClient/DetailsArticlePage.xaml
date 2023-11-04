@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="using:MediaWikiClient.Models"
+             x:DataType="models:Article"
+             x:Class="MediaWikiClient.DetailsArticlePage">
+    <ScrollView>
+        <VerticalStackLayout WidthRequest="800" VerticalOptions="Fill">
+            <Label Text="{Binding  Id}" Padding="10" Opacity="0.5" />
+            <Label Text="Titre de la l'article :" Padding="10,10,10,0" FontAttributes="Bold"
+                   TextDecorations="Underline" />
+            <Label Text="{Binding  Titre}" Padding="10,0,10,10" />
+
+            <Label Text="Dernière mise à jour :" Padding="10,10,10,0" FontAttributes="Bold"
+                   TextDecorations="Underline" />
+            <Label Text="{Binding  Timestamp}" Padding="10,0,10,10" />
+
+            <Label Text="Résumer de l'article :" Padding="10,10,10,0" FontAttributes="Bold"
+                   TextDecorations="Underline" />
+            <Label Text="{Binding  Resumer}" Padding="10,0,10,10" TextType="Html" />
+
+            <Label Text="Contenu de l'article :" Padding="10,10,10,0" FontAttributes="Bold"
+                   TextDecorations="Underline" />
+            <Label Text="Le contenu de l'article peux être distructurer..." Opacity="0.75" FontSize="10"
+                   FontAttributes="Italic" HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center" />
+            <WebView x:Name="ContenuWebview" HeightRequest="325" WidthRequest="800"/>
+            
+            <Button WidthRequest="500" HeightRequest="15" Text="Visiter l'article sur Wikipédia" Padding="10"
+                    Clicked="Button_OnClicked" />
+
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
