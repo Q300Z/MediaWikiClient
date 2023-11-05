@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SqlDialectMappings">
-    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/e01c564c-357b-42d5-96c9-de87f66b2e0d/console.sql" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/MediaWikiClient/Factories/DataService.cs" dialect="TSQL" />
-    <file url="file://$PROJECT_DIR$/MediaWikiClient/MadiaWikiSQL.sql" dialect="TSQL" />
-    <file url="PROJECT" dialect="TSQL" />
-  </component>
-</project>
