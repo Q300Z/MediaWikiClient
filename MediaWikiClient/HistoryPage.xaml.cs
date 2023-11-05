@@ -6,12 +6,10 @@ namespace MediaWikiClient;
 public partial class HistoryPage : ContentPage
 {
     private readonly IDataService _dataService;
-
     public HistoryPage()
     {
         InitializeComponent();
-        _dataService = Application.Current.MainPage.Handler.MauiContext.Services.GetService<IDataService>();
-        // SetHistory();
+        _dataService = Application.Current!.MainPage!.Handler!.MauiContext!.Services.GetService<IDataService>();
     }
 
     protected override void OnAppearing()

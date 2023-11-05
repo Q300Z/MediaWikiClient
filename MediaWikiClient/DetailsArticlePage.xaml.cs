@@ -1,3 +1,4 @@
+using ABI.Microsoft.UI.Xaml.Automation.Peers;
 using MediaWikiClient.Factories;
 using MediaWikiClient.Models;
 using MediaWikiClient.Services;
@@ -8,14 +9,15 @@ namespace MediaWikiClient;
 public partial class DetailsArticlePage : ContentPage
 {
     private readonly IDataService _dataService;
-    private readonly MediaWikiApi _mediaWikiApi;
+    private readonly IMediaWikiApi _mediaWikiApi;
 
     public DetailsArticlePage(Article article)
     {
         InitializeComponent();
         BindingContext = article;
-        _dataService = Application.Current.MainPage.Handler.MauiContext.Services.GetService<IDataService>();
-        _mediaWikiApi = Application.Current.MainPage.Handler.MauiContext.Services.GetService<MediaWikiApi>();
+        _dataService = Application.Current!.MainPage!.Handler!.MauiContext!.Services.GetService<IDataService>();
+        _mediaWikiApi = Application.Current.MainPage.Handler.MauiContext.Services.GetService<IMediaWikiApi>();
+       
 
 
 
@@ -32,6 +34,7 @@ public partial class DetailsArticlePage : ContentPage
             if (article.Contenu == "" || article.IsLu == false)
             {
                 var contenu = await _mediaWikiApi.DetailsArticle(article.Id);
+                article.InDatabase= true;
                 article.Contenu = contenu;
                 article.IsLu = true;
                 article.DateLu = DateTime.Now;

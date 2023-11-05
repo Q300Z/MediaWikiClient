@@ -2,10 +2,14 @@
 
 public partial class App : Application
 {
+    private readonly Constants _constants = new();
+
     public App()
     {
         InitializeComponent();
-
-        MainPage = new AppShell();
+        if (_constants.IsConfigured)
+            MainPage = new AppShell();
+        else
+            MainPage = new ConfigPage();
     }
 }

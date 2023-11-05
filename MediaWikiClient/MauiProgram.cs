@@ -17,12 +17,14 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
         builder.Services.AddSingleton<IDataService, DataService>();
-        builder.Services.AddSingleton<MediaWikiApi>();
+        builder.Services.AddSingleton<IMediaWikiApi, MediaWikiApi>();
+        builder.Services.AddSingleton<Constants>();
 
         builder.Services.AddSingleton<SearchPage>();
         builder.Services.AddTransient<DetailsArticlePage>();
         builder.Services.AddTransient<HistoryPage>();
         builder.Services.AddSingleton<SettingsPage>();
+        builder.Services.AddSingleton<ConfigPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

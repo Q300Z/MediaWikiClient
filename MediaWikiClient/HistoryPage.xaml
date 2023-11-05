@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="using:MediaWikiClient.Models"
              x:DataType="models:ArticleGroup"
-             x:Class="MediaWikiClient.HistoryPage">
+             x:Class="MediaWikiClient.HistoryPage" >
     <VerticalStackLayout>
         <CollectionView x:Name="HistoryList"
                         SelectionMode="Single" SelectionChanged="HistoryList_OnSelectionChanged"

@@ -4,8 +4,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="using:MediaWikiClient.Models"
              x:DataType="models:Article"
-             x:Class="MediaWikiClient.DetailsArticlePage">
-    <ScrollView Margin="20">
+             x:Class="MediaWikiClient.DetailsArticlePage"
+             >
+       
+       <ScrollView Margin="20">
         <VerticalStackLayout WidthRequest="800" VerticalOptions="Fill">
             <Button x:Name="ButtonFavoris" Text="Ajouter aux favoris" ImageSource="star.png" Clicked="FavoriteBtn_OnClicked" WidthRequest="200"
                     HeightRequest="10" BackgroundColor="Yellow" TextColor="Black" />

@@ -3,16 +3,52 @@ using Newtonsoft.Json.Linq;
 
 namespace MediaWikiClient.Services;
 
-public class MediaWikiApi
+public interface IMediaWikiApi
 {
-    private const string ApiUrl = "https://fr.wikipedia.org/w/api.php"; // URL de l'API de Wikipédia en français
+    Task<bool> TestConnection();
+    Task<List<Article>> RechercherArticle(string termeRecherche);
+    Task<string> DetailsArticle(int pageId);
+}
 
+public class MediaWikiApi : IMediaWikiApi
+{
+    private readonly Constants _constants = new();
     private readonly HttpClient _httpClient = new();
+    private readonly string _apiUrl; // URL de l'API de Wikipédia en français
+
+    public MediaWikiApi()
+    {
+        _apiUrl = _constants.EndpointApi;
+    }
+
+    public async Task<bool> TestConnection()
+    {
+        try
+        {
+            var testEndpoint = $"{_apiUrl}?action=query&meta=siteinfo&siprop=general&format=json";
+            var response = await _httpClient.GetStringAsync(testEndpoint);
+
+            if (!string.IsNullOrEmpty(response))
+            {
+                Console.WriteLine(response);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            await Console.Error.WriteLineAsync("Erreur de connexion à l'API MediaWiki : " + ex.Message);
+            return false;
+        }
+    }
 
     public async Task<List<Article>> RechercherArticle(string termeRecherche)
     {
         // Effectuer une recherche
-        var rechercheEndpoint = $"{ApiUrl}?action=query&list=search&srsearch={termeRecherche}&format=json";
+        var rechercheEndpoint = $"{_apiUrl}?action=query&list=search&srsearch={termeRecherche}&format=json";
         var rechercheResultat = await _httpClient.GetStringAsync(rechercheEndpoint);
 
         // Analyser les résultats de la recherche
@@ -41,8 +77,8 @@ public class MediaWikiApi
     public async Task<string> DetailsArticle(int pageId)
     {
         // Obtenir les détails d'un article en utilisant son ID de page
-        // var detailsEndpoint = $"{ApiUrl}?action=query&pageids={pageId}&prop=info|revisions&inprop=url&rvprop=content&format=json&formatversion=2";
-        var detailsEndpoint = $"{ApiUrl}?action=parse&format=json&pageid={pageId}&formatversion=2";
+        // var detailsEndpoint = $"{_apiUrl}?action=query&pageids={pageId}&prop=info|revisions&inprop=url&rvprop=content&format=json&formatversion=2";
+        var detailsEndpoint = $"{_apiUrl}?action=parse&format=json&pageid={pageId}&formatversion=2";
         var detailsResultat = await _httpClient.GetStringAsync(detailsEndpoint);
 
         // Analyser les résultats de la recherche

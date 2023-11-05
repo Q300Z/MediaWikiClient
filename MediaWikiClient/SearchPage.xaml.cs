@@ -8,16 +8,19 @@ namespace MediaWikiClient;
 public partial class SearchPage : ContentPage
 {
     private readonly IDataService _dataService;
-    private readonly MediaWikiApi _mediaWikiApi;
+    private readonly IMediaWikiApi _mediaWikiApi;
 
     public SearchPage()
     {
         InitializeComponent();
-        _dataService = Application.Current.MainPage.Handler.MauiContext.Services.GetService<IDataService>();
-        _mediaWikiApi = Application.Current.MainPage.Handler.MauiContext.Services.GetService<MediaWikiApi>();
+        _dataService = Application.Current!.MainPage!.Handler!.MauiContext!.Services.GetService<IDataService>();
+        _mediaWikiApi = Application.Current.MainPage.Handler.MauiContext.Services.GetService<IMediaWikiApi>();
         BindingContext = this;
 
         SearchResults.Opacity = 0;
+        SearchResults.ItemsSource = null;
+        NbResults.Text = "Aucun résultat";
+        NbResults.Opacity = 0;
     }
 
     protected override void OnAppearing()
@@ -75,22 +78,18 @@ public partial class SearchPage : ContentPage
 
         var apiresult = await _mediaWikiApi.RechercherArticle(search);
 
-        // Crée une liste de tâches pour ajouter les articles à la base de données de manière asynchrone
-        var addTasks = new List<Task<bool>>();
-
-
         foreach (var article in apiresult)
         {
             await SearchProgress.ProgressTo((double)apiresult.IndexOf(article) / apiresult.Count, 250, Easing.Linear);
             article.InDatabase = true;
             article.DateInDatabase = DateTime.Now;
-            article.InDatabase = !await _dataService.AddArticle(article);
+            await _dataService.AddArticle(article);
+            article.InDatabase = false;
         }
-
+        
         SearchProgress.IsVisible = false;
         return apiresult;
     }
-
     private async void SearchResults_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.FirstOrDefault() is not Article article) return;

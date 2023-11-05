@@ -6,29 +6,49 @@ namespace MediaWikiClient.Factories;
 
 public interface IDataService
 {
+    Task<bool> TestConnection();
     Task<List<Article>> SearchArticle(string search = "");
     Task<bool> AddArticle(Article article);
     Task<bool> UpdateArticle(Article article);
     Task<bool> DeleteArticle(Article article);
     Task<bool> ClearHistory();
+    Task<bool> DropDatabase();
 }
 
 public class DataService : IDataService
 {
     private readonly SqlConnection _sqlConnection;
+    private readonly Constants _constants = new();
 
     public DataService()
     {
         var builder = new SqlConnectionStringBuilder
         {
-            DataSource = "192.168.1.103", //"localhost";
-            UserID = "sa",
-            Password = "password@123",
-            InitialCatalog = "mediawiki",
-            TrustServerCertificate = true
+            DataSource = _constants.DbAdresse, //"localhost";
+            UserID = _constants.DbUsername, //"sa";
+            Password = _constants.DbPassword, //"";
+            InitialCatalog = _constants.DbName, //"mediawiki";
+            TrustServerCertificate = _constants.TrustServerCertificate, //true;
             //MultipleActiveResultSets = true //Permet de faire plusieurs requêtes en même temps sur une même connexion
         };
         _sqlConnection = new SqlConnection(builder.ConnectionString);
+    }
+    public async Task<bool> TestConnection()
+    {
+        try
+        {
+            await _sqlConnection.OpenAsync();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            await Console.Error.WriteLineAsync("Erreur de connexion à la base de données : " + ex.Message);
+            return false;
+        }
+        finally
+        {
+            await _sqlConnection.CloseAsync();
+        }
     }
 
     public async Task<List<Article>> SearchArticle(string search = "")
@@ -179,6 +199,27 @@ public class DataService : IDataService
         try
         {
             var sql = "update articles set islu = 0 where islu = 1";
+            await _sqlConnection.OpenAsync();
+            using (var command = new SqlCommand(sql, _sqlConnection))
+            {
+                return await command.ExecuteNonQueryAsync() > 0;
+            }
+        }
+        catch (Exception ex)
+        {
+            await Console.Error.WriteLineAsync(ex.Message);
+            return false;
+        }
+        finally
+        {
+            await _sqlConnection.CloseAsync();
+        }
+    }
+    public async Task<bool> DropDatabase()
+    {
+        try
+        {
+            var sql = "delete from articles";
             await _sqlConnection.OpenAsync();
             using (var command = new SqlCommand(sql, _sqlConnection))
             {
