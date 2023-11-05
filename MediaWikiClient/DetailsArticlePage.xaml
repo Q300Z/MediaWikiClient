@@ -5,8 +5,10 @@
              xmlns:models="using:MediaWikiClient.Models"
              x:DataType="models:Article"
              x:Class="MediaWikiClient.DetailsArticlePage">
-    <ScrollView>
+    <ScrollView Margin="20">
         <VerticalStackLayout WidthRequest="800" VerticalOptions="Fill">
+            <Button x:Name="ButtonFavoris" Text="Ajouter aux favoris" ImageSource="star.png" Clicked="FavoriteBtn_OnClicked" WidthRequest="200"
+                    HeightRequest="10" BackgroundColor="Yellow" TextColor="Black" />
             <Label Text="{Binding  Id}" Padding="10" Opacity="0.5" />
             <Label Text="Titre de la l'article :" Padding="10,10,10,0" FontAttributes="Bold"
                    TextDecorations="Underline" />
@@ -14,7 +16,7 @@
 
             <Label Text="Dernière mise à jour :" Padding="10,10,10,0" FontAttributes="Bold"
                    TextDecorations="Underline" />
-            <Label Text="{Binding  Timestamp}" Padding="10,0,10,10" />
+            <Label Text="{Binding  Date}" Padding="10,0,10,10" />
 
             <Label Text="Résumer de l'article :" Padding="10,10,10,0" FontAttributes="Bold"
                    TextDecorations="Underline" />
@@ -22,15 +24,19 @@
 
             <Label Text="Contenu de l'article :" Padding="10,10,10,0" FontAttributes="Bold"
                    TextDecorations="Underline" />
-            <Label Text="Le contenu de l'article peux être distructurer..." Opacity="0.75" FontSize="10"
+            <Label Text="Le contenu de l'article peux être distructurer..." Opacity="0.75"
+                   FontSize="10"
                    FontAttributes="Italic" HorizontalOptions="Center"
                    HorizontalTextAlignment="Center" />
-            <WebView x:Name="ContenuWebview" HeightRequest="325" WidthRequest="800"/>
-            
-            <Button WidthRequest="500" HeightRequest="15" Text="Visiter l'article sur Wikipédia" Padding="10"
-                    Clicked="Button_OnClicked" />
+            <WebView x:Name="ContenuWebview" HeightRequest="800" WidthRequest="800" Opacity="0" Loaded="ContenuWebview_OnLoaded" />
 
-
+            <Button WidthRequest="500" Text="Visiter l'article sur Wikipédia"
+                    Margin="10"
+                    Clicked="Button_OnClicked" Scale="0.9" />
+            <Button WidthRequest="300" Text="Supprimer l'article de la base de données"
+                    BackgroundColor="Red"
+                    Margin="10"
+                    Clicked="BtnSuppArticle_OnClicked" Scale="0.9" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

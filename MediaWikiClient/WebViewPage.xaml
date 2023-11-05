@@ -5,8 +5,8 @@
              x:Class="MediaWikiClient.WebViewPage">
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="Ouvrir dans mon navigateur" Clicked="Button_OnClicked" 
-            HorizontalOptions="Fill" BackgroundColor="White" TextColor="Black"></Button>
+            <Button Text="Ouvrir dans mon navigateur" Clicked="Button_OnClicked"
+                    HorizontalOptions="Fill" BackgroundColor="White" TextColor="Black" />
             <WebView x:Name="WebView" HorizontalOptions="FillAndExpand"
                      VerticalOptions="FillAndExpand" />
         </StackLayout>

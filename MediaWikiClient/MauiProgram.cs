@@ -16,7 +16,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
-        builder.Services.AddSingleton<DataService>();
+        builder.Services.AddSingleton<IDataService, DataService>();
         builder.Services.AddSingleton<MediaWikiApi>();
 
         builder.Services.AddSingleton<SearchPage>();

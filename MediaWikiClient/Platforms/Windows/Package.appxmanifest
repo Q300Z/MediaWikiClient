@@ -6,14 +6,14 @@
         xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
         IgnorableNamespaces="uap rescap">
 
-    <Identity Name="maui-package-name-placeholder" Publisher="CN=User Name" Version="0.0.0.0"/>
+    <Identity Name="maui-package-name-placeholder" Publisher="CN=Q300Z" Version="0.0.0.0"/>
 
     <mp:PhoneIdentity PhoneProductId="B4B71977-5C20-4830-B01A-5E5AAA80D1DA"
                       PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
     <Properties>
         <DisplayName>$placeholder$</DisplayName>
-        <PublisherDisplayName>User Name</PublisherDisplayName>
+        <PublisherDisplayName>Q300Z</PublisherDisplayName>
         <Logo>$placeholder$.png</Logo>
     </Properties>
 

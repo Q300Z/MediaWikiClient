@@ -24,14 +24,14 @@ public class MediaWikiApi
 
         foreach (var articleJson in articlesJson)
         {
-            Article article = new()
-            {
-                Id = (int)articleJson["pageid"],
-                Titre = (string)articleJson["title"],
-                Resumer = (string)articleJson["snippet"],
-                Timestamp = (string)articleJson["timestamp"],
-                InDatabase = false
-            };
+            var article = new Article
+            (
+                (int)articleJson["pageid"],
+                (string)articleJson["title"],
+                (string)articleJson["snippet"],
+                (DateTime)articleJson["timestamp"],
+                false
+            );
             articles.Add(article);
         }
 
@@ -50,7 +50,7 @@ public class MediaWikiApi
 
         //var contenu = (string)detailsJson["query"]["pages"][0]["revisions"][0]["content"];
         var contenu = (string)detailsJson["parse"]["text"];
-        
+
         return contenu;
     }
 }

@@ -6,11 +6,11 @@ namespace MediaWikiClient.Factories;
 
 public interface IDataService
 {
-    List<Article> SearchArticle(string? search = null, int? limit = null);
-    List<Article> GetArticle(int id);
-    bool AddArticle(Article Article);
-    bool UpdateArticle(Article Article);
-    bool DeleteArticle(Article Article);
+    Task<List<Article>> SearchArticle(string search = "");
+    Task<bool> AddArticle(Article article);
+    Task<bool> UpdateArticle(Article article);
+    Task<bool> DeleteArticle(Article article);
+    Task<bool> ClearHistory();
 }
 
 public class DataService : IDataService
@@ -19,154 +19,180 @@ public class DataService : IDataService
 
     public DataService()
     {
-        var builder = new SqlConnectionStringBuilder();
-        builder.DataSource = "192.168.1.103"; //"localhost";
-        builder.UserID = "sa";
-        builder.Password = "password@123";
-        builder.InitialCatalog = "MediaWikiClient";
-        builder.TrustServerCertificate = true;
+        var builder = new SqlConnectionStringBuilder
+        {
+            DataSource = "192.168.1.103", //"localhost";
+            UserID = "sa",
+            Password = "password@123",
+            InitialCatalog = "mediawiki",
+            TrustServerCertificate = true
+            //MultipleActiveResultSets = true //Permet de faire plusieurs requêtes en même temps sur une même connexion
+        };
         _sqlConnection = new SqlConnection(builder.ConnectionString);
     }
 
-
-    public List<Article> SearchArticle(string? search = null, int? limit = null)
+    public async Task<List<Article>> SearchArticle(string search = "")
     {
         try
         {
             var sql =
-                "SELECT TOP(@limit) Article.id, Article.nom, adresse, telephone, email, ville, cp, activite, url, moyen, date " +
-                "FROM Article";
-            List<Article> values;
-            _sqlConnection.Open();
+                "SELECT id, titre, resumer, contenu, date, inDatabase, dateInDatabase, isFavoris, dateFavoris, isLu, dateLu FROM articles WHERE titre LIKE @search ORDER BY titre";
+
             using (var command = new SqlCommand(sql, _sqlConnection))
             {
-                command.Parameters.Add(new SqlParameter("@limit", limit ?? int.MaxValue));
-                using (var reader = command.ExecuteReader())
+                command.Parameters.Add(new SqlParameter("@search", search + '%'));
+                var articles = new List<Article>();
+                await _sqlConnection.OpenAsync();
+                using (var r = await command.ExecuteReaderAsync())
                 {
-                    values = reader.Cast<IDataRecord>().Select(r => new Article(
-                    )).ToList();
-                    values.ForEach(async Article => { });
+                    while (await r.ReadAsync())
+                    {
+                        var id = (int)r["id"];
+                        var titre = (string)r["titre"];
+                        var resumer = (string)r["resumer"];
+                        var contenu = (string)r["contenu"];
+                        var date = (DateTime)r["date"];
+                        var inDatabase = (bool)r["indatabase"];
+                        var dateInDatabase = (DateTime)r["dateindatabase"];
+                        var isFavoris = (bool)r["isfavoris"];
+                        var dateFavoris = (DateTime)r["datefavoris"];
+                        var isLu = (bool)r["islu"];
+                        var dateLu = (DateTime)r["datelu"];
+
+                        articles.Add(new Article(id, titre, resumer, date, inDatabase, dateInDatabase, isFavoris, dateFavoris, isLu, dateLu,
+                            contenu));
+                    }
                 }
 
-                return values;
+                return articles;
             }
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine(ex.Message);
+            await Console.Error.WriteLineAsync(ex.Message);
             return new List<Article>();
         }
         finally
         {
-            _sqlConnection.Close();
+            await _sqlConnection.CloseAsync();
         }
     }
 
-    public List<Article> GetArticle(int id)
+    public async Task<bool> AddArticle(Article article)
     {
         try
         {
-            var sql =
-                "SELECT Article.id, Article.nom, adresse,telephone,email,ville,cp,activite,url,moyen,date " +
-                "FROM Article " +
-                "WHERE Article.id = ${id}";
+            var sql = "INSERT INTO articles (id, titre, resumer, contenu, date, indatabase, dateindatabase, isfavoris, datefavoris," +
+                      "islu, datelu) VALUES (@Id, @Titre, @Resumer, @Contenu, @Date, @InDatabase, @DateInDatabase, @IsFavoris," +
+                      " @DateFavoris, @IsLu, @DateLu)";
 
-            List<Article> values;
-            _sqlConnection.Open();
             using (var command = new SqlCommand(sql, _sqlConnection))
             {
-                using (var reader = command.ExecuteReader())
-                {
-                    values = reader.Cast<IDataRecord>().Select(r => new Article(
-                    )).ToList();
-                    values.ForEach(async Article => { });
-                }
-            }
-
-            return values;
-        }
-        catch (Exception ex)
-        {
-            Console.Error.WriteLine(ex.Message);
-            return new List<Article>();
-        }
-        finally
-        {
-            _sqlConnection.Close();
-        }
-    }
-
-    public bool AddArticle(Article Article)
-    {
-        try
-        {
-            var sql = $"INSERT INTO Article () VALUES " +
-                      $"('')";
-
-            _sqlConnection.Open();
-            using (var command = new SqlCommand(sql, _sqlConnection))
-            {
-                var result = command.ExecuteNonQuery() > 0 ? true : false;
-
-                return result;
+                command.Parameters.AddWithValue("@Id", article.Id);
+                command.Parameters.AddWithValue("@Titre", article.Titre);
+                command.Parameters.AddWithValue("@Resumer", article.Resumer);
+                command.Parameters.AddWithValue("@Contenu", article.Contenu);
+                command.Parameters.AddWithValue("@Date", article.Date);
+                command.Parameters.AddWithValue("@InDatabase", true);
+                command.Parameters.AddWithValue("@DateInDatabase", article.DateInDatabase);
+                command.Parameters.AddWithValue("@IsFavoris", article.IsFavoris);
+                command.Parameters.AddWithValue("@DateFavoris", article.DateFavoris);
+                command.Parameters.AddWithValue("@IsLu", article.IsLu);
+                command.Parameters.AddWithValue("@DateLu", article.DateLu);
+                await _sqlConnection.OpenAsync();
+                return await command.ExecuteNonQueryAsync() > 0;
             }
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine(ex.Message);
+            await Console.Error.WriteLineAsync(ex.Message);
             return false;
         }
         finally
         {
-            _sqlConnection.Close();
+            await _sqlConnection.CloseAsync();
         }
     }
 
-    public bool UpdateArticle(Article Article)
+    public async Task<bool> UpdateArticle(Article article)
     {
         try
         {
-            var sql = "UPDATE Article SET ";
+            var sql = "UPDATE articles SET titre = @Titre, resumer = @Resumer, contenu = @Contenu, date = @Date, indatabase = @InDatabase," +
+                      "dateindatabase = @DateInDatabase, isfavoris = @IsFavoris, datefavoris = @DateFavoris, islu = @IsLu, datelu = @DateLu WHERE id = @Id";
 
-            _sqlConnection.Open();
             using (var command = new SqlCommand(sql, _sqlConnection))
             {
-                var result = command.ExecuteNonQuery() > 0 ? true : false;
-                return result;
+                command.Parameters.AddWithValue("@Id", article.Id);
+                command.Parameters.AddWithValue("@Titre", article.Titre);
+                command.Parameters.AddWithValue("@Resumer", article.Resumer);
+                command.Parameters.AddWithValue("@Contenu", article.Contenu);
+                command.Parameters.AddWithValue("@Date", article.Date);
+                command.Parameters.AddWithValue("@InDatabase", article.InDatabase);
+                command.Parameters.AddWithValue("@DateInDatabase", article.DateInDatabase);
+                command.Parameters.AddWithValue("@IsFavoris", article.IsFavoris);
+                command.Parameters.AddWithValue("@DateFavoris", article.DateFavoris);
+                command.Parameters.AddWithValue("@IsLu", article.IsLu);
+                command.Parameters.AddWithValue("@DateLu", article.DateLu);
+                await _sqlConnection.OpenAsync();
+                return await command.ExecuteNonQueryAsync() > 0;
             }
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine(ex.Message);
+            await Console.Error.WriteLineAsync(ex.Message);
             return false;
         }
         finally
         {
-            _sqlConnection.Close();
+            await _sqlConnection.CloseAsync();
         }
     }
 
-    public bool DeleteArticle(Article Article)
+    public async Task<bool> DeleteArticle(Article article)
     {
         try
         {
-            var sql = $"DELETE FROM Article WHERE id = {Article.Id}";
-            _sqlConnection.Open();
+            var sql = "DELETE FROM articles WHERE Id = @Id";
+
             using (var command = new SqlCommand(sql, _sqlConnection))
             {
-                var result = command.ExecuteNonQuery() > 0 ? true : false;
-
-                return result;
+                command.Parameters.AddWithValue("@Id", article.Id);
+                if (_sqlConnection.State == ConnectionState.Closed)
+                    await _sqlConnection.OpenAsync();
+                return await command.ExecuteNonQueryAsync() > 0;
             }
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine(ex.Message);
+            await Console.Error.WriteLineAsync(ex.Message);
             return false;
         }
         finally
         {
-            _sqlConnection.Close();
+            await _sqlConnection.CloseAsync();
+        }
+    }
+
+    public async Task<bool> ClearHistory()
+    {
+        try
+        {
+            var sql = "update articles set islu = 0 where islu = 1";
+            await _sqlConnection.OpenAsync();
+            using (var command = new SqlCommand(sql, _sqlConnection))
+            {
+                return await command.ExecuteNonQueryAsync() > 0;
+            }
+        }
+        catch (Exception ex)
+        {
+            await Console.Error.WriteLineAsync(ex.Message);
+            return false;
+        }
+        finally
+        {
+            await _sqlConnection.CloseAsync();
         }
     }
 }
