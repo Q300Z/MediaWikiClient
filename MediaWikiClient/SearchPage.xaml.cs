@@ -5,7 +5,7 @@ using MediaWikiClient.Services;
 
 namespace MediaWikiClient;
 
-public partial class SearchPage : ContentPage
+public partial class SearchPage
 {
     private readonly IDataService _dataService;
     private readonly IMediaWikiApi _mediaWikiApi;
@@ -15,7 +15,7 @@ public partial class SearchPage : ContentPage
         InitializeComponent();
         _dataService = Application.Current!.MainPage!.Handler!.MauiContext!.Services.GetService<IDataService>();
         _mediaWikiApi = Application.Current.MainPage.Handler.MauiContext.Services.GetService<IMediaWikiApi>();
-        BindingContext = this;
+        // BindingContext = this;
 
         SearchResults.Opacity = 0;
         SearchResults.ItemsSource = null;
@@ -86,10 +86,11 @@ public partial class SearchPage : ContentPage
             await _dataService.AddArticle(article);
             article.InDatabase = false;
         }
-        
+
         SearchProgress.IsVisible = false;
         return apiresult;
     }
+
     private async void SearchResults_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.FirstOrDefault() is not Article article) return;

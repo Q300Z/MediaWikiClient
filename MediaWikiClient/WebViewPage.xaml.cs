@@ -2,7 +2,7 @@ using MediaWikiClient.Models;
 
 namespace MediaWikiClient;
 
-public partial class WebViewPage : ContentPage
+public partial class WebViewPage
 {
     public WebViewPage(Article article)
     {

@@ -3,9 +3,10 @@ using MediaWikiClient.Models;
 
 namespace MediaWikiClient;
 
-public partial class HistoryPage : ContentPage
+public partial class HistoryPage
 {
     private readonly IDataService _dataService;
+
     public HistoryPage()
     {
         InitializeComponent();

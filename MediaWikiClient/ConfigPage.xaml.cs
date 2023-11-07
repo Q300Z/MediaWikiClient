@@ -3,9 +3,8 @@ using MediaWikiClient.Services;
 
 namespace MediaWikiClient;
 
-public partial class ConfigPage : ContentPage
+public partial class ConfigPage
 {
-    private readonly Constants _constants = new();
     private readonly IDataService _dataService = new DataService();
     private readonly IMediaWikiApi _mediaWikiApi = new MediaWikiApi();
 
@@ -46,28 +45,25 @@ public partial class ConfigPage : ContentPage
             Preferences.Set("endpointApi", AdresseApiEntry.Text);
         if (CertAutoSwitch.IsToggled)
             Preferences.Set("trustServerCertificate", CertAutoSwitch.IsToggled);
-        if (AdresseApiLabel.Text != null)
-            Preferences.Set("endpointApi", AdresseApiEntry.Text);
-        
-        
+
         var dbresult = await _dataService.TestConnection();
-        if(!dbresult)
+        if (!dbresult)
         {
             await DisplayAlert("Erreur", "Impossible de se connecter à la base de données", "OK");
             AdresseDbEntry.Focus();
         }
-        
+
         var apiresult = await _mediaWikiApi.TestConnection();
-        if(!apiresult)
+        if (!apiresult)
         {
             await DisplayAlert("Erreur", "Impossible de se connecter à l'API", "OK");
             AdresseApiEntry.Focus();
         }
-        
+
         if (dbresult && apiresult)
         {
             Preferences.Set("isconfigured", true);
-            Application.Current.MainPage = new AppShell();
+            Application.Current!.MainPage = new AppShell();
         }
     }
 }

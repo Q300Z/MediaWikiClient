@@ -1,4 +1,3 @@
-using ABI.Microsoft.UI.Xaml.Automation.Peers;
 using MediaWikiClient.Factories;
 using MediaWikiClient.Models;
 using MediaWikiClient.Services;
@@ -6,7 +5,7 @@ using MediaWikiClient.Services;
 namespace MediaWikiClient;
 
 //https://learn.microsoft.com/en-us/dotnet/maui/xaml/fundamentals/mvvm
-public partial class DetailsArticlePage : ContentPage
+public partial class DetailsArticlePage
 {
     private readonly IDataService _dataService;
     private readonly IMediaWikiApi _mediaWikiApi;
@@ -17,15 +16,12 @@ public partial class DetailsArticlePage : ContentPage
         BindingContext = article;
         _dataService = Application.Current!.MainPage!.Handler!.MauiContext!.Services.GetService<IDataService>();
         _mediaWikiApi = Application.Current.MainPage.Handler.MauiContext.Services.GetService<IMediaWikiApi>();
-       
-
 
 
         ButtonFavoris.Text = article.IsFavoris ? "Retirer des favoris" : "Ajouter aux favoris";
         ButtonFavoris.ImageSource = article.IsFavoris ? "starfilled.png" : "star.png";
-        
     }
-    
+
 
     private async void LoadContenu(Article article)
     {
@@ -34,7 +30,7 @@ public partial class DetailsArticlePage : ContentPage
             if (article.Contenu == "" || article.IsLu == false)
             {
                 var contenu = await _mediaWikiApi.DetailsArticle(article.Id);
-                article.InDatabase= true;
+                article.InDatabase = true;
                 article.Contenu = contenu;
                 article.IsLu = true;
                 article.DateLu = DateTime.Now;
@@ -85,7 +81,6 @@ public partial class DetailsArticlePage : ContentPage
             var article = BindingContext as Article;
             if (await _dataService.DeleteArticle(article))
             {
-                article = null;
                 await DisplayAlert("Succès", "Article supprimé avec succès", "OK");
                 await Navigation.PopAsync(true);
             }

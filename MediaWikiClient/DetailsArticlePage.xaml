@@ -4,12 +4,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="using:MediaWikiClient.Models"
              x:DataType="models:Article"
-             x:Class="MediaWikiClient.DetailsArticlePage"
-             >
-       
-       <ScrollView Margin="20">
+             x:Class="MediaWikiClient.DetailsArticlePage">
+
+    <ScrollView Margin="20">
         <VerticalStackLayout WidthRequest="800" VerticalOptions="Fill">
-            <Button x:Name="ButtonFavoris" Text="Ajouter aux favoris" ImageSource="star.png" Clicked="FavoriteBtn_OnClicked" WidthRequest="200"
+            <Button x:Name="ButtonFavoris" Text="Ajouter aux favoris" ImageSource="star.png"
+                    Clicked="FavoriteBtn_OnClicked" WidthRequest="200"
                     HeightRequest="10" BackgroundColor="Yellow" TextColor="Black" />
             <Label Text="{Binding  Id}" Padding="10" Opacity="0.5" />
             <Label Text="Titre de la l'article :" Padding="10,10,10,0" FontAttributes="Bold"
@@ -30,7 +30,8 @@
                    FontSize="10"
                    FontAttributes="Italic" HorizontalOptions="Center"
                    HorizontalTextAlignment="Center" />
-            <WebView x:Name="ContenuWebview" HeightRequest="800" WidthRequest="800" Opacity="0" Loaded="ContenuWebview_OnLoaded" />
+            <WebView x:Name="ContenuWebview" HeightRequest="800" WidthRequest="800" Opacity="0"
+                     Loaded="ContenuWebview_OnLoaded" />
 
             <Button WidthRequest="500" Text="Visiter l'article sur Wikipédia"
                     Margin="10"

@@ -17,8 +17,8 @@ public interface IDataService
 
 public class DataService : IDataService
 {
-    private readonly SqlConnection _sqlConnection;
     private readonly Constants _constants = new();
+    private readonly SqlConnection _sqlConnection;
 
     public DataService()
     {
@@ -29,10 +29,11 @@ public class DataService : IDataService
             Password = _constants.DbPassword, //"";
             InitialCatalog = _constants.DbName, //"mediawiki";
             TrustServerCertificate = _constants.TrustServerCertificate, //true;
-            //MultipleActiveResultSets = true //Permet de faire plusieurs requêtes en même temps sur une même connexion
+            MultipleActiveResultSets = true //Permet de faire plusieurs requêtes en même temps sur une même connexion
         };
         _sqlConnection = new SqlConnection(builder.ConnectionString);
     }
+
     public async Task<bool> TestConnection()
     {
         try
@@ -55,8 +56,7 @@ public class DataService : IDataService
     {
         try
         {
-            var sql =
-                "SELECT id, titre, resumer, contenu, date, inDatabase, dateInDatabase, isFavoris, dateFavoris, isLu, dateLu FROM articles WHERE titre LIKE @search ORDER BY titre";
+            const string sql = "SELECT id, titre, resumer, contenu, date, inDatabase, dateInDatabase, isFavoris, dateFavoris, isLu, dateLu FROM articles WHERE titre LIKE @search ORDER BY titre";
 
             using (var command = new SqlCommand(sql, _sqlConnection))
             {
@@ -102,9 +102,9 @@ public class DataService : IDataService
     {
         try
         {
-            var sql = "INSERT INTO articles (id, titre, resumer, contenu, date, indatabase, dateindatabase, isfavoris, datefavoris," +
-                      "islu, datelu) VALUES (@Id, @Titre, @Resumer, @Contenu, @Date, @InDatabase, @DateInDatabase, @IsFavoris," +
-                      " @DateFavoris, @IsLu, @DateLu)";
+            const string sql = "INSERT INTO articles (id, titre, resumer, contenu, date, indatabase, dateindatabase, isfavoris, datefavoris," +
+                               "islu, datelu) VALUES (@Id, @Titre, @Resumer, @Contenu, @Date, @InDatabase, @DateInDatabase, @IsFavoris," +
+                               " @DateFavoris, @IsLu, @DateLu)";
 
             using (var command = new SqlCommand(sql, _sqlConnection))
             {
@@ -138,8 +138,8 @@ public class DataService : IDataService
     {
         try
         {
-            var sql = "UPDATE articles SET titre = @Titre, resumer = @Resumer, contenu = @Contenu, date = @Date, indatabase = @InDatabase," +
-                      "dateindatabase = @DateInDatabase, isfavoris = @IsFavoris, datefavoris = @DateFavoris, islu = @IsLu, datelu = @DateLu WHERE id = @Id";
+            const string sql = "UPDATE articles SET titre = @Titre, resumer = @Resumer, contenu = @Contenu, date = @Date, indatabase = @InDatabase," +
+                               "dateindatabase = @DateInDatabase, isfavoris = @IsFavoris, datefavoris = @DateFavoris, islu = @IsLu, datelu = @DateLu WHERE id = @Id";
 
             using (var command = new SqlCommand(sql, _sqlConnection))
             {
@@ -173,7 +173,7 @@ public class DataService : IDataService
     {
         try
         {
-            var sql = "DELETE FROM articles WHERE Id = @Id";
+            const string sql = "DELETE FROM articles WHERE Id = @Id";
 
             using (var command = new SqlCommand(sql, _sqlConnection))
             {
@@ -198,7 +198,7 @@ public class DataService : IDataService
     {
         try
         {
-            var sql = "update articles set islu = 0 where islu = 1";
+            const string sql = "update articles set islu = 0 where islu = 1";
             await _sqlConnection.OpenAsync();
             using (var command = new SqlCommand(sql, _sqlConnection))
             {
@@ -215,11 +215,12 @@ public class DataService : IDataService
             await _sqlConnection.CloseAsync();
         }
     }
+
     public async Task<bool> DropDatabase()
     {
         try
         {
-            var sql = "delete from articles";
+            const string sql = "DELETE from articles";
             await _sqlConnection.OpenAsync();
             using (var command = new SqlCommand(sql, _sqlConnection))
             {

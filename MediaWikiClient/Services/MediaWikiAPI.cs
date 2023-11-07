@@ -12,9 +12,9 @@ public interface IMediaWikiApi
 
 public class MediaWikiApi : IMediaWikiApi
 {
+    private readonly string _apiUrl; // URL de l'API de Wikipédia en français
     private readonly Constants _constants = new();
     private readonly HttpClient _httpClient = new();
-    private readonly string _apiUrl; // URL de l'API de Wikipédia en français
 
     public MediaWikiApi()
     {
@@ -33,10 +33,8 @@ public class MediaWikiApi : IMediaWikiApi
                 Console.WriteLine(response);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
         catch (Exception ex)
         {
@@ -58,18 +56,19 @@ public class MediaWikiApi : IMediaWikiApi
         // Convertir les résultats de la recherche en une liste d'articles
         var articles = new List<Article>();
 
-        foreach (var articleJson in articlesJson)
-        {
-            var article = new Article
-            (
-                (int)articleJson["pageid"],
-                (string)articleJson["title"],
-                (string)articleJson["snippet"],
-                (DateTime)articleJson["timestamp"],
-                false
-            );
-            articles.Add(article);
-        }
+        if (articlesJson != null)
+            foreach (var articleJson in articlesJson)
+            {
+                var article = new Article
+                (
+                    (int)articleJson["pageid"],
+                    (string)articleJson["title"],
+                    (string)articleJson["snippet"],
+                    (DateTime)articleJson["timestamp"],
+                    false
+                );
+                articles.Add(article);
+            }
 
         return articles;
     }

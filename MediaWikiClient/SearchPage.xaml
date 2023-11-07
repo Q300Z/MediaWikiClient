@@ -32,10 +32,12 @@
                FontAttributes="Italic" />
         <SearchBar x:Name="SearchBar" TextChanged="SearchBar_OnTextChanged"
                    HorizontalOptions="Center" WidthRequest="500" />
-        <ProgressBar x:Name="SearchProgress" IsVisible="False" ProgressColor="Purple" WidthRequest="500" />
+        <ProgressBar x:Name="SearchProgress" IsVisible="False" ProgressColor="Purple"
+                     WidthRequest="500" />
         <CollectionView x:Name="SearchResults"
                         SelectionMode="Single" SelectionChanged="SearchResults_OnSelectionChanged"
-                        VerticalOptions="Fill" HorizontalOptions="Center" WidthRequest="500" HeightRequest="300">
+                        VerticalOptions="Fill" HorizontalOptions="Center" WidthRequest="500"
+                        HeightRequest="300">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Article">
                     <Grid Padding="5">

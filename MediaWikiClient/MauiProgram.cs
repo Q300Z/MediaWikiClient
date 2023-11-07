@@ -1,6 +1,5 @@
 ﻿using MediaWikiClient.Factories;
 using MediaWikiClient.Services;
-using Microsoft.Extensions.Logging;
 
 namespace MediaWikiClient;
 

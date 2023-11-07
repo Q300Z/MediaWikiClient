@@ -1,6 +1,6 @@
 ﻿namespace MediaWikiClient;
 
-public partial class App : Application
+public partial class App
 {
     private readonly Constants _constants = new();
 

@@ -4,13 +4,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="using:MediaWikiClient"
              x:DataType="model:Constants"
-             x:Class="MediaWikiClient.ConfigPage" 
-             >
+             x:Class="MediaWikiClient.ConfigPage">
     <VerticalStackLayout WidthRequest="500" HeightRequest="250" VerticalOptions="Start">
-        <Label Text="Configuration de l'application" FontSize="25" HorizontalOptions="CenterAndExpand" />
+        <Label Text="Configuration de l'application" FontSize="25"
+               HorizontalOptions="CenterAndExpand" />
         <HorizontalStackLayout>
             <Label Text="Connexion SQL Server" FontSize="20" HorizontalOptions="Start" Padding="15" />
-            <Switch IsToggled="False" HorizontalOptions="End" x:Name="SwitchDb" Toggled="SwitchDb_OnToggled" />
+            <Switch IsToggled="False" HorizontalOptions="End"
+                    Toggled="SwitchDb_OnToggled" />
         </HorizontalStackLayout>
         <Label Text="Adresse de connexion" Padding="10" />
         <Entry Placeholder="localhost" x:Name="AdresseDbEntry" IsEnabled="False" />
@@ -18,7 +19,7 @@
         <Label Text="Nom d'utilisateur" Padding="10" />
         <Entry Placeholder="sa" x:Name="UsernameDbEntry" IsEnabled="False" />
 
-        <Label Text="Mot de passe" x:Name="PasswordDbLabel" Padding="10" />
+        <Label Text="Mot de passe" Padding="10" />
         <Entry Placeholder="" x:Name="PasswordDbEntry" IsPassword="True" IsEnabled="False">
             <Entry.Triggers>
                 <Trigger TargetType="Entry"
@@ -30,18 +31,21 @@
             </Entry.Triggers>
         </Entry>
         <Label Text="Nom de la base de donnée" Padding="10" />
-        <Entry Placeholder="localhost" x:Name="DbEntry" IsEnabled="False" />
+        <Entry Placeholder="mediawiki" x:Name="DbEntry" IsEnabled="False" />
         <Label Text="Certificat auto signé" Padding="10" />
         <Switch IsToggled="True" IsEnabled="False" x:Name="CertAutoSwitch" />
 
         <HorizontalStackLayout>
             <Label Text="Connexion à l'api" FontSize="20" HorizontalOptions="Start" Padding="15" />
-            <Switch IsToggled="False" HorizontalOptions="End" x:Name="SwitchApi" Toggled="SwitchApi_OnToggled" />
+            <Switch IsToggled="False" HorizontalOptions="End"
+                    Toggled="SwitchApi_OnToggled" />
         </HorizontalStackLayout>
 
-        <Label Text="Endpoint de l'api" x:Name="AdresseApiLabel" Padding="10" />
-        <Entry Placeholder="https://fr.wikipedia.org/w/api.php" x:Name="AdresseApiEntry" IsEnabled="False" />
+        <Label Text="Endpoint de l'api" Padding="10" />
+        <Entry Placeholder="https://fr.wikipedia.org/w/api.php" x:Name="AdresseApiEntry"
+               IsEnabled="False" />
 
-        <Button x:Name="SaveBtn" Text="Terminer" Padding="15" Margin="15" Clicked="SaveBtn_OnClicked" />
+        <Button x:Name="SaveBtn" Text="Terminer" Padding="15" Margin="15"
+                Clicked="SaveBtn_OnClicked" />
     </VerticalStackLayout>
 </ContentPage>
