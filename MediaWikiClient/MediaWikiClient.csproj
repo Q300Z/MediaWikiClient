@@ -3,7 +3,7 @@
     <PropertyGroup>
         <!--        <TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>-->
         <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
-        <OutputType>WinExe</OutputType>
+        <OutputType>Exe</OutputType>
         <UseMaui>true</UseMaui>
         <SingleProject>true</SingleProject>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -25,44 +25,105 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
         <ApplicationIcon>Resources\AppIcon\mediawiki.ico</ApplicationIcon>
-        <PackageIcon>mediawiki.ico</PackageIcon>
-        <NeutralLanguage>fr</NeutralLanguage>
-        <Title>MediaWikiClient</Title>
-        <Authors>Thomas Boutin</Authors>
-        <Configurations>Debug;Release</Configurations>
-        <Platforms>x64</Platforms>
-        <Company>Qalpuch.cc</Company>
-        <AssemblyVersion>1.0</AssemblyVersion>
-        <FileVersion>1.0</FileVersion>
-        <PublicSign>false</PublicSign>
+        <PackageIcon>mediawiki.png</PackageIcon>
+        <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
+        <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+        <PackageCertificateThumbprint>E1B8977966A613F48E8C9732FB86CDBB19DA5A6E</PackageCertificateThumbprint>
+        <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+        <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+        <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+        <GenerateTestArtifacts>True</GenerateTestArtifacts>
+        <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <RepositoryUrl>https://github.com/Q300Z/MediaWikiClient</RepositoryUrl>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
+      <ApplicationDisplayVersion>3.1.0</ApplicationDisplayVersion>
+      <ApplicationVersion>3</ApplicationVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
+      <ApplicationDisplayVersion>3.1.0</ApplicationDisplayVersion>
+      <ApplicationVersion>3</ApplicationVersion>
+    </PropertyGroup>
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\mediawiki.svg" Color="#ffffff"/>
+        <MauiIcon Include="Resources\AppIcon\mediawiki.svg" Color="#ffffff" />
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\mediawiki.svg" Color="#512BD4" BaseSize="128,128"/>
+        <MauiSplashScreen Include="Resources\Splash\mediawiki.svg" Color="#512BD4" BaseSize="128,128" />
 
         <!-- Images -->
-        <MauiImage Include="Resources\Images\*"/>
-        <MauiImage Update="Resources\Images\mediawiki.svg" BaseSize="168,208"/>
+        <MauiImage Include="Resources\Images\*" />
+        <MauiImage Update="Resources\Images\mediawiki.svg" BaseSize="168,208" />
 
         <!-- Custom Fonts -->
-        <MauiFont Include="Resources\Fonts\*"/>
+        <MauiFont Include="Resources\Fonts\*" />
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)"/>
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Factories\"/>
+        <Folder Include="Models\" />
+        <Folder Include="Factories\" />
+        <Folder Include="Services\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\..\source\repos\MediaWikiClient\MediaWikiClient\Resources\Raw\mediawiki.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="ConfigPage.xaml.cs">
+            <DependentUpon>ConfigPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="DetailsArticlePage.xaml.cs">
+            <DependentUpon>DetailsArticlePage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="HistoryPage.xaml.cs">
+            <DependentUpon>HistoryPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="SearchPage.xaml.cs">
+            <DependentUpon>SearchPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="SettingsPage.xaml.cs">
+            <DependentUpon>SettingsPage.xaml</DependentUpon>
+        </Compile>
+        <Compile Update="WebViewPage.xaml.cs">
+            <DependentUpon>WebViewPage.xaml</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <MauiXaml Update="ConfigPage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="DetailsArticlePage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="HistoryPage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="SearchPage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="SettingsPage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
+        <MauiXaml Update="WebViewPage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </MauiXaml>
     </ItemGroup>
 
 </Project>

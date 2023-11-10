@@ -3,8 +3,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MediaWikiClient.SettingsPage">
-    <ScrollView>
-        <VerticalStackLayout WidthRequest="500" HeightRequest="250" VerticalOptions="Start">
+    <ScrollView  VerticalOptions="Fill">
+        <VerticalStackLayout WidthRequest="500" VerticalOptions="Start">
             <Label Text="Connexion SQL Server" FontSize="20" HorizontalOptions="Start" Padding="15" />
 
             <Label Text="Adresse de connexion" Padding="10" />
@@ -36,13 +36,21 @@
             <Label Text="Endpoint de l'api" Padding="10" />
             <Entry Placeholder="https://fr.wikipedia.org/w/api.php" x:Name="AdresseApiEntry" />
 
-            <HorizontalStackLayout>
-                <Button Text="Terminer" Padding="15" Margin="15"
-                        Clicked="SaveBtn_OnClicked" />
-                <Button
-                    Text="Die gesamte Anwendung zurücksetzen" Padding="15"
-                    Margin="15" Clicked="DeleteBtn_OnClicked"
-                    BackgroundColor="Red" />
+            <HorizontalStackLayout Margin="0,20">
+                <VerticalStackLayout>
+                    <ActivityIndicator IsEnabled="False" IsRunning="False"
+                                       x:Name="ActivityIndicatorDropSave" />
+                    <Button Text="Terminer" Padding="15" Margin="15"
+                            Clicked="SaveBtn_OnClicked" HeightRequest="20" />
+                </VerticalStackLayout>
+                <VerticalStackLayout>
+                    <ActivityIndicator IsEnabled="False" IsRunning="False"
+                                       x:Name="ActivityIndicatorDropDb" />
+                    <Button
+                        Text="Die gesamte Anwendung zurücksetzen" Padding="15"
+                        Margin="15" Clicked="DeleteBtn_OnClicked"
+                        BackgroundColor="Red" ImageSource="delete.png" HeightRequest="20" />
+                </VerticalStackLayout>
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

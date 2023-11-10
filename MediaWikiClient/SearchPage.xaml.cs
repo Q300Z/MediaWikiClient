@@ -44,7 +44,11 @@ public partial class SearchPage
                 if (dbresult != null && dbresult.Count >= 10)
                     SearchResults.ItemsSource = dbresult;
                 else
-                    SearchResults.ItemsSource = await GetArticlesFromApi(searchBar.Text.Trim());
+                {
+                    var apiresult = await GetArticlesFromApi(searchBar.Text.Trim());
+                    if(searchBar.Text.Length > 0)
+                        SearchResults.ItemsSource = apiresult;
+                }
 
                 stopwatch.Stop();
                 var nbresults = ((List<Article>)SearchResults.ItemsSource)?.Count ?? 0;

@@ -17,7 +17,7 @@ public interface IDataService
 
 public class DataService : IDataService
 {
-    private readonly Constants _constants = new();
+    private readonly Constants _constants = new ();
     private readonly SqlConnection _sqlConnection;
 
     public DataService()
@@ -26,7 +26,7 @@ public class DataService : IDataService
         {
             DataSource = _constants.DbAdresse, //"localhost";
             UserID = _constants.DbUsername, //"sa";
-            Password = _constants.DbPassword, //"";
+            Password = _constants.DbPassword, //"yourpassword";
             InitialCatalog = _constants.DbName, //"mediawiki";
             TrustServerCertificate = _constants.TrustServerCertificate, //true;
             MultipleActiveResultSets = true //Permet de faire plusieurs requêtes en même temps sur une même connexion

@@ -21,8 +21,10 @@ public partial class SettingsPage
         AdresseApiEntry.Text = constants.EndpointApi;
     }
 
-    private void SaveBtn_OnClicked(object sender, EventArgs e)
+    private async void SaveBtn_OnClicked(object sender, EventArgs e)
     {
+        ActivityIndicatorDropSave.IsEnabled = true;
+        ActivityIndicatorDropSave.IsRunning = true;
         if (AdresseDbEntry.Text != null)
             Preferences.Set("dbAdresse", AdresseDbEntry.Text);
         if (UsernameDbEntry.Text != null)
@@ -35,8 +37,16 @@ public partial class SettingsPage
             Preferences.Set("endpointApi", AdresseApiEntry.Text);
         if (CertAutoSwitch.IsToggled)
             Preferences.Set("trustServerCertificate", CertAutoSwitch.IsToggled);
-        Preferences.Set("dbPassword", "password@123");
-        Preferences.Set("isconfigured", true);
+
+        var dbresult = await _dataService.TestConnection();
+        if (!dbresult)
+        {
+            await DisplayAlert("Erreur", "Impossible de se connecter à la base de données", "OK");
+            AdresseDbEntry.Focus();
+        }
+
+        ActivityIndicatorDropSave.IsEnabled = false;
+        ActivityIndicatorDropSave.IsRunning = false;
     }
 
     private async void DeleteBtn_OnClicked(object sender, EventArgs e)
@@ -44,11 +54,19 @@ public partial class SettingsPage
         // Merci copilot pour l'allemand xD
         var result = await DisplayAlert("Warnung", "Sind Sie sicher, dass Sie die Datenbank löschen wollen?", "Ja", "Nein");
         if (result)
+        {
+            ActivityIndicatorDropDb.IsEnabled = true;
+            ActivityIndicatorDropDb.IsRunning = true;
+            Preferences.Clear();
+            Application.Current!.MainPage = new ConfigPage();
             if (await _dataService.DropDatabase())
             {
                 await DisplayAlert("Erfolg", "Datenbank erfolgreich gelöscht", "OK");
-                Preferences.Clear();
-                Application.Current!.MainPage = new ConfigPage();
+                
             }
+
+            ActivityIndicatorDropDb.IsEnabled = false;
+            ActivityIndicatorDropDb.IsRunning = false;
+        }
     }
 }

@@ -46,6 +46,7 @@ public partial class ConfigPage
         if (CertAutoSwitch.IsToggled)
             Preferences.Set("trustServerCertificate", CertAutoSwitch.IsToggled);
 
+        var a = Preferences.Get("dbPassword", "");
         var dbresult = await _dataService.TestConnection();
         if (!dbresult)
         {
