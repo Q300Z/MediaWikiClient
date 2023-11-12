@@ -25,28 +25,21 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
         <ApplicationIcon>Resources\AppIcon\mediawiki.ico</ApplicationIcon>
-        <PackageIcon>mediawiki.png</PackageIcon>
-        <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
-        <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-        <PackageCertificateThumbprint>E1B8977966A613F48E8C9732FB86CDBB19DA5A6E</PackageCertificateThumbprint>
-        <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-        <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
-        <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+        <PackageIcon>mediawiki.ico</PackageIcon>
+        <NeutralLanguage>fr</NeutralLanguage>
+        <Title>MediaWikiClient</Title>
+        <Authors>Thomas Boutin</Authors>
+        <Version>3.1.0</Version>
+        
         <GenerateTestArtifacts>True</GenerateTestArtifacts>
-        <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <RepositoryUrl>https://github.com/Q300Z/MediaWikiClient</RepositoryUrl>
-    </PropertyGroup>
+        
+        <Configurations>Release;Debug</Configurations>
+        <Platforms>x64</Platforms>
+        <PlatformTarget>x64</PlatformTarget>
 
-    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
-      <ApplicationDisplayVersion>3.1.0</ApplicationDisplayVersion>
-      <ApplicationVersion>3</ApplicationVersion>
-    </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
-      <ApplicationDisplayVersion>3.1.0</ApplicationDisplayVersion>
-      <ApplicationVersion>3</ApplicationVersion>
     </PropertyGroup>
+    
     <ItemGroup>
         <!-- App Icon -->
         <MauiIcon Include="Resources\AppIcon\mediawiki.svg" Color="#ffffff" />
@@ -75,13 +68,6 @@
         <Folder Include="Models\" />
         <Folder Include="Factories\" />
         <Folder Include="Services\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Include="..\..\..\source\repos\MediaWikiClient\MediaWikiClient\Resources\Raw\mediawiki.png">
-        <Pack>True</Pack>
-        <PackagePath>\</PackagePath>
-      </None>
     </ItemGroup>
 
     <ItemGroup>
