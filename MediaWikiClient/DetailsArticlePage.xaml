@@ -7,10 +7,11 @@
              x:Class="MediaWikiClient.DetailsArticlePage">
 
     <ScrollView Margin="20">
-        <VerticalStackLayout WidthRequest="800" VerticalOptions="Fill">
+        <VerticalStackLayout WidthRequest="{OnIdiom 100, Phone=400, Tablet=400, Desktop=800}"
+                             VerticalOptions="Fill">
             <Button x:Name="ButtonFavoris" Text="Ajouter aux favoris" ImageSource="star.png"
-                    Clicked="FavoriteBtn_OnClicked" WidthRequest="200"
-                    HeightRequest="10" BackgroundColor="Yellow" TextColor="Black" />
+                    Clicked="FavoriteBtn_OnClicked" BackgroundColor="Yellow"
+                    TextColor="Black" />
             <Label Text="{Binding  Id}" Padding="10" Opacity="0.5" />
             <Label Text="Titre de la l'article :" Padding="10,10,10,0" FontAttributes="Bold"
                    TextDecorations="Underline" />
@@ -30,16 +31,21 @@
                    FontSize="10"
                    FontAttributes="Italic" HorizontalOptions="Center"
                    HorizontalTextAlignment="Center" />
-            <WebView x:Name="ContenuWebview" HeightRequest="800" WidthRequest="800" Opacity="0"
-                     Loaded="ContenuWebview_OnLoaded" />
+            <ActivityIndicator x:Name="ActivityIndicatorWebView" IsRunning="True" IsVisible="True"/>
+            <WebView x:Name="ContenuWebview"
+                     HeightRequest="{OnIdiom 200, Phone=800, Tablet=800, Desktop=1000}"
+                     WidthRequest="{OnIdiom 100, Phone=400, Tablet=400, Desktop=800}" Opacity="0" IsVisible="False"
+                     Loaded="ContenuWebview_OnLoaded"/>
 
-            <Button WidthRequest="500" Text="Visiter l'article sur Wikipédia"
+            <Button WidthRequest="300"
+                    Text="Visiter l'article sur Wikipédia"
                     Margin="10"
-                    Clicked="Button_OnClicked" Scale="0.9" />
-            <Button WidthRequest="300" Text="Supprimer l'article de la base de données"
+                    Clicked="Button_OnClicked" />
+            <Button WidthRequest="300"
+                    Text="Supprimer l'article de la base de données"
                     BackgroundColor="Red"
                     Margin="10"
-                    Clicked="BtnSuppArticle_OnClicked" Scale="0.9" />
+                    Clicked="BtnSuppArticle_OnClicked" Scale="0.9" x:Name="BtnSuppArticle"/>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

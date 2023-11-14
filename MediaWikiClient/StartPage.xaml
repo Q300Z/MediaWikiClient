@@ -5,7 +5,7 @@
              xmlns:model="using:MediaWikiClient"
              x:DataType="model:Constants"
              x:Class="MediaWikiClient.StartPage">
-    <ScrollView HeightRequest="650">
+    <ScrollView HeightRequest="500">
         <VerticalStackLayout WidthRequest="500" VerticalOptions="Start">
             <Label Text="Configuration de l'application" FontSize="25"
                    HorizontalOptions="CenterAndExpand" />

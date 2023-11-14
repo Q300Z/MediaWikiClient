@@ -46,7 +46,6 @@ public partial class SettingsPage
             if (CertAutoSwitch.IsToggled)
                 Preferences.Set("trustServerCertificate", CertAutoSwitch.IsToggled);
 
-            var a = Preferences.Get("dbPassword", "");
 
             var dbnewString = _dataService.NewConnectionString();
             var dbresult = await _dataService.TestConnection();
@@ -55,6 +54,8 @@ public partial class SettingsPage
                 await DisplayAlert("Erreur", "Impossible de se connecter à la base de données", "OK");
                 AdresseDbEntry.Focus();
             }
+
+            Preferences.Set("isdbconfigured", SwitchDb.IsToggled);
         }
 
         var apiresult = await _mediaWikiApi.TestConnection();

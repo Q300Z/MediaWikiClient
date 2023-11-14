@@ -9,6 +9,7 @@ public partial class DetailsArticlePage
 {
     private readonly IDataService _dataService;
     private readonly IMediaWikiApi _mediaWikiApi;
+    private readonly Constants _constantes;
 
     public DetailsArticlePage(Article article)
     {
@@ -16,10 +17,12 @@ public partial class DetailsArticlePage
         BindingContext = article;
         _dataService = Application.Current!.MainPage!.Handler!.MauiContext!.Services.GetService<IDataService>();
         _mediaWikiApi = Application.Current.MainPage.Handler.MauiContext.Services.GetService<IMediaWikiApi>();
+        _constantes = Application.Current.MainPage.Handler.MauiContext.Services.GetService<Constants>();
 
 
         ButtonFavoris.Text = article.IsFavoris ? "Retirer des favoris" : "Ajouter aux favoris";
         ButtonFavoris.ImageSource = article.IsFavoris ? "starfilled.png" : "star.png";
+        BtnSuppArticle.IsVisible = _constantes.IsDbConfigured;
     }
 
 
@@ -27,6 +30,7 @@ public partial class DetailsArticlePage
     {
         try
         {
+            BtnSuppArticle.IsVisible = _constantes.IsDbConfigured;
             if (article.Contenu == "" || article.IsLu == false)
             {
                 var contenu = await _mediaWikiApi.DetailsArticle(article.Id);
@@ -37,15 +41,34 @@ public partial class DetailsArticlePage
                 await _dataService.UpdateArticle(article);
             }
 
-            MainThread.BeginInvokeOnMainThread(async () =>
+            if (DeviceInfo.Platform == DevicePlatform.WinUI)
             {
+                MainThread.BeginInvokeOnMainThread(async () =>
+                {
+                    ActivityIndicatorWebView.IsVisible = false;
+                    ActivityIndicatorWebView.IsRunning = false;
+                    ContenuWebview.IsVisible = true;
+                    var htmlSource = new HtmlWebViewSource
+                    {
+                        Html = article.Contenu ?? "<h1 style=\"font-size:15px\">Impossible de charger le contenu de l'article</h1>"
+                    };
+                    ContenuWebview.Source = htmlSource;
+                    await ContenuWebview.FadeTo(1, 500, Easing.CubicInOut);
+                });
+            }
+            else
+            {
+                ActivityIndicatorWebView.IsVisible = false;
+                ActivityIndicatorWebView.IsRunning = false;
+                ContenuWebview.IsVisible = true;
                 var htmlSource = new HtmlWebViewSource
                 {
-                    Html = article.Contenu ?? "<h1>Impossible de charger le contenu de l'article</h1>"
+                    Html = $"<h1 style=\"font-size:15px\">Webview incompatible avec {DeviceInfo.Platform}</h1>"
                 };
                 ContenuWebview.Source = htmlSource;
+                ContenuWebview.HeightRequest = 150;
                 await ContenuWebview.FadeTo(1, 500, Easing.CubicInOut);
-            });
+            }
         }
         catch (Exception e)
         {

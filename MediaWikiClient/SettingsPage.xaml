@@ -3,10 +3,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MediaWikiClient.SettingsPage">
-    <ScrollView HeightRequest="650">
-        <VerticalStackLayout WidthRequest="500" VerticalOptions="Start">
+    <ScrollView HeightRequest="{OnIdiom 100, Phone=800, Tablet=800, Desktop=500}">
+        <VerticalStackLayout WidthRequest="{OnIdiom 100, Phone=400, Tablet=500, Desktop=500}"
+                             VerticalOptions="Start">
             <Label Text="Configuration de l'application" FontSize="25"
                    HorizontalOptions="CenterAndExpand" />
+
             <HorizontalStackLayout HorizontalOptions="Start">
                 <Label Text="Etat de la connexion à SQL Server :" FontSize="20"
                        HorizontalOptions="Start"
@@ -33,8 +35,10 @@
             </Entry>
             <Label Text="Nom de la base de donnée" Padding="10" />
             <Entry Placeholder="mediawiki" x:Name="DbEntry" IsEnabled="False" />
-            <Label Text="Certificat auto signé" Padding="10" />
-            <Switch IsToggled="True" IsEnabled="False" x:Name="CertAutoSwitch" />
+            <HorizontalStackLayout>
+                <Label Text="Certificat auto signé" Padding="10" />
+                <Switch IsToggled="True" IsEnabled="False" x:Name="CertAutoSwitch" />
+            </HorizontalStackLayout>
 
             <Label Text="Connexion API" FontSize="20" HorizontalOptions="Start" Padding="15" />
 
@@ -46,7 +50,7 @@
                     <ActivityIndicator IsEnabled="False" IsRunning="False"
                                        x:Name="ActivityIndicatorDropSave" />
                     <Button Text="Terminer" Padding="15" Margin="15"
-                            Clicked="SaveBtn_OnClicked" HeightRequest="20" />
+                            Clicked="SaveBtn_OnClicked" />
                 </VerticalStackLayout>
                 <VerticalStackLayout>
                     <ActivityIndicator IsEnabled="False" IsRunning="False"
@@ -54,7 +58,7 @@
                     <Button
                         Text="Die gesamte Anwendung zurücksetzen" Padding="15"
                         Margin="15" Clicked="DeleteBtn_OnClicked"
-                        BackgroundColor="Red" ImageSource="delete.png" HeightRequest="20" />
+                        BackgroundColor="Red" ImageSource="delete.png" />
                 </VerticalStackLayout>
             </HorizontalStackLayout>
         </VerticalStackLayout>

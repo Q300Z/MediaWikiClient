@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <!--        <TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>-->
+        <TargetFrameworks>net7.0-android;</TargetFrameworks>
         <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
         <OutputType>Exe</OutputType>
         <UseMaui>true</UseMaui>
@@ -16,20 +16,20 @@
         <ApplicationIdGuid>F9AB51DE-C7C1-4614-BDD1-D170A0969E7A</ApplicationIdGuid>
 
         <!-- Versions -->
-        <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-        <ApplicationVersion>1</ApplicationVersion>
+        <ApplicationDisplayVersion>5.0</ApplicationDisplayVersion>
+        <ApplicationVersion>5</ApplicationVersion>
 
         <!--        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>-->
         <!--        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>-->
-        <!--        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>-->
+        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-        <ApplicationIcon>Resources\AppIcon\mediawiki.ico</ApplicationIcon>
-        <PackageIcon>mediawiki.ico</PackageIcon>
+<!--        <ApplicationIcon>Resources\AppIcon\mediawiki.ico</ApplicationIcon>-->
+<!--        <PackageIcon>mediawiki.ico</PackageIcon>-->
         <NeutralLanguage>fr</NeutralLanguage>
         <Title>MediaWikiClient</Title>
         <Authors>Thomas Boutin</Authors>
-        <Version>3.1.0</Version>
+        <Version>5.0.0</Version>
 
         <GenerateTestArtifacts>True</GenerateTestArtifacts>
 
@@ -42,14 +42,15 @@
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\mediawiki.svg" Color="#ffffff"/>
+        <MauiIcon Include="Resources\AppIcon\mediawiki.svg" Color="#ffffff" BaseSize="16,16"/>
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\mediawiki.svg" Color="#512BD4" BaseSize="128,128"/>
+        <MauiSplashScreen Include="Resources\Splash\mediawiki.svg" Color="#512BD4" 
+                          BaseSize="96,96"/>
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*"/>
-        <MauiImage Update="Resources\Images\mediawiki.svg" BaseSize="168,208"/>
+        <MauiImage Update="Resources\Images\mediawiki.svg" BaseSize="168,168"/>
 
         <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*"/>
@@ -111,5 +112,4 @@
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
     </ItemGroup>
-
 </Project>

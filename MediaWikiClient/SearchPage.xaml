@@ -20,24 +20,26 @@
             Text="Bienvenue sur le Client MediaWiki"
             SemanticProperties.HeadingLevel="Level1"
             FontSize="32"
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center" x:Name="Titre" />
 
         <Label
             Text="Faite votre recherche dans la barre de recherche ci-dessous :"
             SemanticProperties.HeadingLevel="Level2"
             SemanticProperties.Description="Faite votre recherhce dans la barre de recherche ci-dessous"
             FontSize="18"
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center" x:Name="SousTitre" />
         <Label x:Name="NbResults" Opacity="0.75" HorizontalOptions="Center" FontSize="10"
                FontAttributes="Italic" />
         <SearchBar x:Name="SearchBar" TextChanged="SearchBar_OnTextChanged"
-                   HorizontalOptions="Center" WidthRequest="500" />
+                   HorizontalOptions="Center" WidthRequest="500"
+                   SearchButtonPressed="SearchBar_OnSearchButtonPressed" />
         <ProgressBar x:Name="SearchProgress" IsVisible="False" ProgressColor="Purple"
                      WidthRequest="500" />
         <CollectionView x:Name="SearchResults"
                         SelectionMode="Single" SelectionChanged="SearchResults_OnSelectionChanged"
-                        VerticalOptions="Fill" HorizontalOptions="Center" WidthRequest="500"
-                        HeightRequest="300">
+                        VerticalOptions="Fill" HorizontalOptions="Center"
+                        WidthRequest="{OnIdiom 100, Phone=200, Tablet=300, Desktop=500}"
+                        HeightRequest="{OnIdiom 100, Phone=500, Tablet=500, Desktop=300}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Article">
                     <Grid Padding="5">
