@@ -42,11 +42,13 @@ public partial class SearchPage
 
                 var dbresult = await _dataService.SearchArticle(searchBar.Text.Trim());
                 if (dbresult != null && dbresult.Count >= 10)
+                {
                     SearchResults.ItemsSource = dbresult;
+                }
                 else
                 {
                     var apiresult = await GetArticlesFromApi(searchBar.Text.Trim());
-                    if(searchBar.Text.Length > 0)
+                    if (searchBar.Text.Length > 0)
                         SearchResults.ItemsSource = apiresult;
                 }
 

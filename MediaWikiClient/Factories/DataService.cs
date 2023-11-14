@@ -7,6 +7,8 @@ namespace MediaWikiClient.Factories;
 public interface IDataService
 {
     Task<bool> TestConnection();
+
+    bool NewConnectionString();
     Task<List<Article>> SearchArticle(string search = "");
     Task<bool> AddArticle(Article article);
     Task<bool> UpdateArticle(Article article);
@@ -17,8 +19,8 @@ public interface IDataService
 
 public class DataService : IDataService
 {
-    private readonly Constants _constants = new ();
-    private readonly SqlConnection _sqlConnection;
+    private readonly Constants _constants = new();
+    private SqlConnection _sqlConnection;
 
     public DataService()
     {
@@ -49,6 +51,29 @@ public class DataService : IDataService
         finally
         {
             await _sqlConnection.CloseAsync();
+        }
+    }
+
+    public bool NewConnectionString()
+    {
+        try
+        {
+            var builder = new SqlConnectionStringBuilder
+            {
+                DataSource = _constants.DbAdresse, //"localhost";
+                UserID = _constants.DbUsername, //"sa";
+                Password = _constants.DbPassword, //"yourpassword";
+                InitialCatalog = _constants.DbName, //"mediawiki";
+                TrustServerCertificate = _constants.TrustServerCertificate, //true;
+                MultipleActiveResultSets = true //Permet de faire plusieurs requêtes en même temps sur une même connexion
+            };
+            _sqlConnection = new SqlConnection(builder.ConnectionString);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine("Erreur de connexion à la base de données : " + ex.Message);
+            return false;
         }
     }
 

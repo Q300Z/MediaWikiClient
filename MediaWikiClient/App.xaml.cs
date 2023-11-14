@@ -10,6 +10,6 @@ public partial class App
         if (_constants.IsConfigured)
             MainPage = new AppShell();
         else
-            MainPage = new ConfigPage();
+            MainPage = new StartPage();
     }
 }

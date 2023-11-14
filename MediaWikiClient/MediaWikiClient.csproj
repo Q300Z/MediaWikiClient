@@ -30,48 +30,48 @@
         <Title>MediaWikiClient</Title>
         <Authors>Thomas Boutin</Authors>
         <Version>3.1.0</Version>
-        
+
         <GenerateTestArtifacts>True</GenerateTestArtifacts>
-        
+
         <Configurations>Release;Debug</Configurations>
         <Platforms>x64</Platforms>
         <PlatformTarget>x64</PlatformTarget>
 
 
     </PropertyGroup>
-    
+
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\mediawiki.svg" Color="#ffffff" />
+        <MauiIcon Include="Resources\AppIcon\mediawiki.svg" Color="#ffffff"/>
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\mediawiki.svg" Color="#512BD4" BaseSize="128,128" />
+        <MauiSplashScreen Include="Resources\Splash\mediawiki.svg" Color="#512BD4" BaseSize="128,128"/>
 
         <!-- Images -->
-        <MauiImage Include="Resources\Images\*" />
-        <MauiImage Update="Resources\Images\mediawiki.svg" BaseSize="168,208" />
+        <MauiImage Include="Resources\Images\*"/>
+        <MauiImage Update="Resources\Images\mediawiki.svg" BaseSize="168,208"/>
 
         <!-- Custom Fonts -->
-        <MauiFont Include="Resources\Fonts\*" />
+        <MauiFont Include="Resources\Fonts\*"/>
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2"/>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Models\" />
-        <Folder Include="Factories\" />
-        <Folder Include="Services\" />
+        <Folder Include="Models\"/>
+        <Folder Include="Factories\"/>
+        <Folder Include="Services\"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="ConfigPage.xaml.cs">
+        <Compile Update="StartPage.xaml.cs">
             <DependentUpon>ConfigPage.xaml</DependentUpon>
         </Compile>
         <Compile Update="DetailsArticlePage.xaml.cs">
@@ -92,7 +92,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <MauiXaml Update="ConfigPage.xaml">
+        <MauiXaml Update="StartPage.xaml">
             <Generator>MSBuild:Compile</Generator>
         </MauiXaml>
         <MauiXaml Update="DetailsArticlePage.xaml">

@@ -3,6 +3,7 @@ namespace MediaWikiClient;
 public class Constants
 {
     public bool IsConfigured => Preferences.Get("isconfigured", false);
+    public bool IsDbConfigured => Preferences.Get("isdbconfigured", false);
 
     public string DbAdresse => Preferences.Get("dbAdresse", "localhost");
     public string DbUsername => Preferences.Get("dbUsername", "sa");

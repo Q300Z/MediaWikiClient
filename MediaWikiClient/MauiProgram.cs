@@ -24,7 +24,7 @@ public static class MauiProgram
         builder.Services.AddTransient<DetailsArticlePage>();
         builder.Services.AddTransient<HistoryPage>();
         builder.Services.AddSingleton<SettingsPage>();
-        builder.Services.AddSingleton<ConfigPage>();
+        builder.Services.AddSingleton<StartPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();
