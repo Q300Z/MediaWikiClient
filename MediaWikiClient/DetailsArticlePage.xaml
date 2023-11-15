@@ -31,11 +31,12 @@
                    FontSize="10"
                    FontAttributes="Italic" HorizontalOptions="Center"
                    HorizontalTextAlignment="Center" />
-            <ActivityIndicator x:Name="ActivityIndicatorWebView" IsRunning="True" IsVisible="True"/>
+            <ActivityIndicator x:Name="ActivityIndicatorWebView" IsRunning="True" IsVisible="True" />
             <WebView x:Name="ContenuWebview"
                      HeightRequest="{OnIdiom 200, Phone=800, Tablet=800, Desktop=1000}"
-                     WidthRequest="{OnIdiom 100, Phone=400, Tablet=400, Desktop=800}" Opacity="0" IsVisible="False"
-                     Loaded="ContenuWebview_OnLoaded"/>
+                     WidthRequest="{OnIdiom 100, Phone=400, Tablet=400, Desktop=800}" Opacity="0"
+                     IsVisible="False"
+                     Loaded="ContenuWebview_OnLoaded" />
 
             <Button WidthRequest="300"
                     Text="Visiter l'article sur Wikipédia"
@@ -45,7 +46,7 @@
                     Text="Supprimer l'article de la base de données"
                     BackgroundColor="Red"
                     Margin="10"
-                    Clicked="BtnSuppArticle_OnClicked" Scale="0.9" x:Name="BtnSuppArticle"/>
+                    Clicked="BtnSuppArticle_OnClicked" Scale="0.9" x:Name="BtnSuppArticle" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

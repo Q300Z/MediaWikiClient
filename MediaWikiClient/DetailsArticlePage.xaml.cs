@@ -7,9 +7,9 @@ namespace MediaWikiClient;
 //https://learn.microsoft.com/en-us/dotnet/maui/xaml/fundamentals/mvvm
 public partial class DetailsArticlePage
 {
+    private readonly Constants _constantes;
     private readonly IDataService _dataService;
     private readonly IMediaWikiApi _mediaWikiApi;
-    private readonly Constants _constantes;
 
     public DetailsArticlePage(Article article)
     {

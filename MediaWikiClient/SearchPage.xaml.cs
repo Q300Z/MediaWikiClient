@@ -31,7 +31,7 @@ public partial class SearchPage
         SearchBar.Focus();
     }
 
-    private async void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
+    private void SearchBar_OnTextChanged(object sender, TextChangedEventArgs e)
     {
         var searchBar = (SearchBar)sender;
         PopulateSearchResults(searchBar.Text);
@@ -105,7 +105,6 @@ public partial class SearchPage
                 SousTitre.IsVisible = true;
                 await Titre.FadeTo(1);
                 await SousTitre.FadeTo(1);
-                
             }
         }
     }
