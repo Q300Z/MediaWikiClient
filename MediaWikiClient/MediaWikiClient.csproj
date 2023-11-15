@@ -45,14 +45,13 @@
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\mediawiki.svg" Color="#ffffff" BaseSize="16,16"/>
+        <MauiIcon Include="Resources\AppIcon\mediawiki.svg"/>
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\mediawiki.svg" Color="#512BD4" BaseSize="96,96"/>
+        <MauiSplashScreen Include="Resources\Splash\mediawiki.svg"/>
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*"/>
-        <MauiImage Update="Resources\Images\mediawiki.svg" BaseSize="168,168"/>
 
         <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*"/>
