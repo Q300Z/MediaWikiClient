@@ -39,13 +39,23 @@
         <!--        <PublishSingleFile>true</PublishSingleFile>-->
         <!--        <PublishReadyToRun>true</PublishReadyToRun>-->
 
-        
 
     </PropertyGroup>
-    
+
     <PropertyGroup Condition="'$(Configuration)' == 'Release'">
         <DebugSymbols>false</DebugSymbols>
         <DebugType>None</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">
+        <Platform>x64</Platform>
+        <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+
+    <PropertyGroup 
+            Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+        <Platform>arm64</Platform>
+        <PlatformTarget>arm64</PlatformTarget>
     </PropertyGroup>
 
     <ItemGroup>
