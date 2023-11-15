@@ -38,9 +38,6 @@ jobs:
       - name: Restore Dependencies
         run: dotnet restore MediaWikiClient/MediaWikiClient.csproj
 
-      - name: Clean Build Artifacts
-        run: Remove-Item -Path 'D:\a\MediaWikiClient\MediaWikiClient\MediaWikiClient\obj\Release' -Recurse -Force
-
       - name: Build MAUI Android
         run: dotnet publish MediaWikiClient/MediaWikiClient.csproj -c Release -f net7.0-android -r android-arm64
 
