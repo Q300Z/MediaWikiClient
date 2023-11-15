@@ -1,10 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net7.0-android;</TargetFrameworks>
-        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);
-            net7.0-windows10.0.19041.0
-        </TargetFrameworks>
-
+        <TargetFrameworks>$(TargetFrameworks);net7.0-windows10.0.19041.0;net7.0-android;</TargetFrameworks>
         <OutputType>Exe</OutputType>
         <UseMaui>true</UseMaui>
         <SingleProject>true</SingleProject>
@@ -30,8 +26,8 @@
         <Version>5.0.0</Version>
 
         <GenerateTestArtifacts>True</GenerateTestArtifacts>
-        <!--        <PublishTrimmed>true</PublishTrimmed>-->
-        <!--        <SelfContained>true</SelfContained>-->
+        <PublishTrimmed>true</PublishTrimmed>
+        <SelfContained>true</SelfContained>
         <!--        <GenerateAppInstallerFile>False</GenerateAppInstallerFile>-->
         <!--        <PublishSingleFile>true</PublishSingleFile>-->
         <!--        <PublishReadyToRun>true</PublishReadyToRun>-->

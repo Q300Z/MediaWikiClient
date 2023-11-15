@@ -38,6 +38,9 @@ jobs:
       - name: Restore Dependencies
         run: dotnet restore MediaWikiClient/MediaWikiClient.csproj
 
+      - name: Clean Build Artifacts
+        run: Remove-Item -Path 'D:\a\MediaWikiClient\MediaWikiClient\MediaWikiClient\obj\Release' -Recurse -Force
+
       - name: Build MAUI Android
         run: dotnet publish MediaWikiClient/MediaWikiClient.csproj -c Release -f net7.0-android -r android-arm64
 
@@ -48,88 +51,30 @@ jobs:
           path: MediaWikiClient/bin/Release/net7.0-android/
 
 # MAUI Windows Build
-  build-windows:
-    runs-on: windows-latest
-    name: Windows Build
-    steps:
+  # build-windows:
+  #   runs-on: windows-latest
+  #   name: Windows Build
+  #   steps:
 
-      - name: Checkout
-        uses: actions/checkout@v4.1.1
+  #     - name: Checkout
+  #       uses: actions/checkout@v4.1.1
 
-      - name: Setup .NET 7
-        uses: actions/setup-dotnet@v3.2.0
-        with:
-          dotnet-version: 7.0.x
+  #     - name: Setup .NET 7
+  #       uses: actions/setup-dotnet@v3.2.0
+  #       with:
+  #         dotnet-version: 7.0.x
 
-      - name: Install MAUI Workload
-        run: dotnet workload install maui-windows maui-android --ignore-failed-sources
+  #     - name: Install MAUI Workload
+  #       run: dotnet workload install maui-windows maui-android --ignore-failed-sources
 
-      - name: Restore Dependencies
-        run: dotnet restore MediaWikiClient/MediaWikiClient.csproj
+  #     - name: Restore Dependencies
+  #       run: dotnet restore MediaWikiClient/MediaWikiClient.csproj
 
-      - name: Build MAUI Windows
-        run: dotnet publish MediaWikiClient/MediaWikiClient.csproj -c Release -f net7.0-windows10.0.19041.0
+  #     - name: Build MAUI Windows
+  #       run: dotnet publish MediaWikiClient/MediaWikiClient.csproj -c Release -f net7.0-windows10.0.19041.0
 
-      - name: Upload Windows Artifact
-        uses: actions/upload-artifact@v3.1.3
-        with:
-          name: mediawikiclient-windows-ci-build
-          path: MediaWikiClient/bin/Release/net7.0-windows10.0.19041.0/
-
-# # MAUI iOS Build
-#   build-ios:
-#     runs-on: macos-12
-#     name: iOS Build
-#     steps:
-
-#       - name: Checkout
-#         uses: actions/checkout@v4.1.1
-
-#       - name: Setup .NET 7
-#         uses: actions/setup-dotnet@v3.2.0
-#         with:
-#           dotnet-version: 7.0.x
-
-#       - name: Install MAUI Workload
-#         run: dotnet workload install maui --ignore-failed-sources
-
-#       - name: Restore Dependencies
-#         run: dotnet restore src/MauiBeach/MauiBeach.csproj
-
-#       - name: Build MAUI iOS
-#         run: dotnet build src/MauiBeach/MauiBeach.csproj -c Release -f net6.0-ios --no-restore /p:buildForSimulator=True /p:packageApp=True /p:ArchiveOnBuild=False
-
-#       - name: Upload iOS Artifact
-#         uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
-#         with:
-#           name: mauibeach-ios-ci-build
-#           path: src/MauiBeach/bin/Release/net6.0-ios/iossimulator-x64/**/*.app
-
-# # MAUI MacCatalyst Build
-#   build-mac:
-#     runs-on: macos-12
-#     name: MacCatalyst Build
-#     steps:
-
-#       - name: Checkout
-#         uses: actions/checkout@v4.1.1
-
-#       - name: Setup .NET 7
-#         uses: actions/setup-dotnet@v3.2.0
-#         with:
-#           dotnet-version: 7.0.x
-
-#       - name: Install MAUI Workload
-#         run: dotnet workload install maui --ignore-failed-sources
-
-#       - name: Restore Dependencies
-#         run: dotnet restore src/MauiBeach/MauiBeach.csproj
-
-#       - name: Build MAUI MacCatalyst
-#         run: dotnet publish src/MauiBeach/MauiBeach.csproj -c Release -f net6.0-maccatalyst --no-restore -p:BuildIpa=True
-
-#       - name: Upload MacCatalyst Artifact
-#         uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
-#         with:
-#           name: mauibeach-macos-ci-build
-#           path: src/MauiBeach/bin/Release/net6.0-maccatalyst/maccatalyst-x64/publish/*.pkg
+  #     - name: Upload Windows Artifact
+  #       uses: actions/upload-artifact@v3.1.3
+  #       with:
+  #         name: mediawikiclient-windows-ci-build
+  #         path: MediaWikiClient/bin/Release/net7.0-windows10.0.19041.0/
