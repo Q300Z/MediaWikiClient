@@ -39,6 +39,12 @@
 
 
     </PropertyGroup>
+    
+    <PropertyGroup Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">
+        <RuntimeIdentifier >android-arm64</RuntimeIdentifier>
+        <Platforms>android-arm64</Platforms>
+        <PlatformTarget>android-arm64</PlatformTarget>
+    </PropertyGroup>
 
     <ItemGroup>
         <!-- App Icon -->
