@@ -33,13 +33,13 @@ jobs:
           dotnet-version: 7.0.x
           
       - name: Install MAUI Workload
-        run: dotnet workload install maui --ignore-failed-sources
+        run: dotnet workload install maui-core maui-android --ignore-failed-sources
 
       - name: Restore Dependencies
         run: dotnet restore MediaWikiClient/MediaWikiClient.csproj
 
       - name: Build MAUI Android
-        run: dotnet publish MediaWikiClient/MediaWikiClient.csproj -c Release -f net7.0-android --no-restore
+        run: dotnet publish MediaWikiClient/MediaWikiClient.csproj -c Release -f net7.0-android
 
       - name: Upload Android Artifact
         uses: actions/upload-artifact@v3.1.3
@@ -63,13 +63,13 @@ jobs:
           cache: true
 
       - name: Install MAUI Workload
-        run: dotnet workload install maui --ignore-failed-sources
+        run: dotnet workload install maui-core maui-windows --ignore-failed-sources
 
       - name: Restore Dependencies
         run: dotnet restore MediaWikiClient/MediaWikiClient.csproj
 
       - name: Build MAUI Windows
-        run: dotnet publish MediaWikiClient/MediaWikiClient.csproj -c Release -f net7.0-windows10.0.19041.0 --no-restore
+        run: dotnet publish MediaWikiClient/MediaWikiClient.csproj -c Release -f net7.0-windows10.0.19041.0
 
       - name: Upload Windows Artifact
         uses: actions/upload-artifact@v3.1.3
