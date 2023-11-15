@@ -24,8 +24,8 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-        <!--        <ApplicationIcon>Resources\AppIcon\mediawiki.ico</ApplicationIcon>-->
-        <!--        <PackageIcon>mediawiki.ico</PackageIcon>-->
+        <ApplicationIcon>Resources\AppIcon\mediawiki.ico</ApplicationIcon>
+        <PackageIcon>mediawiki.ico</PackageIcon>
         <NeutralLanguage>fr</NeutralLanguage>
         <Title>MediaWikiClient</Title>
         <Authors>Thomas Boutin</Authors>
@@ -38,8 +38,8 @@
         <PlatformTarget>x64</PlatformTarget>
         <PublishTrimmed>true</PublishTrimmed>
         <SelfContained>true</SelfContained>
-<!--        <PublishSingleFile>true</PublishSingleFile>-->
-<!--        <PublishReadyToRun>true</PublishReadyToRun>-->
+        <!--        <PublishSingleFile>true</PublishSingleFile>-->
+        <!--        <PublishReadyToRun>true</PublishReadyToRun>-->
 
     </PropertyGroup>
 
