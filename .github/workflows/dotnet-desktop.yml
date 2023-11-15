@@ -9,7 +9,6 @@ on:
       - '**/*.gitattributes'
   pull_request:
     branches: [ master ]
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -20,7 +19,7 @@ env:
 jobs:
 # MAUI Android Build
   build-android:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     name: Android Build
     steps:
 
@@ -33,7 +32,7 @@ jobs:
           dotnet-version: 7.0.x
           
       - name: Install MAUI Workload
-        run: dotnet workload install maui-windows maui-android --ignore-failed-sources
+        run: dotnet workload install maui-android --ignore-failed-sources
 
       - name: Restore Dependencies
         run: dotnet restore MediaWikiClient/MediaWikiClient.csproj
@@ -62,7 +61,7 @@ jobs:
           dotnet-version: 7.0.x
 
       - name: Install MAUI Workload
-        run: dotnet workload install maui-windows maui-android --ignore-failed-sources
+        run: dotnet workload install maui-windows --ignore-failed-sources
 
       - name: Restore Dependencies
         run: dotnet restore MediaWikiClient/MediaWikiClient.csproj

@@ -1,6 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>$(TargetFrameworks);net7.0-windows10.0.19041.0;net7.0-android;</TargetFrameworks>
+        <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+        <TargetFramework Condition="$([MSBuild]::IsOSPlatform('linux'))">net7.0-android</TargetFramework>
+        <EmbedAssembliesIntoApk Condition="$([MSBuild]::IsOSPlatform('linux'))">true</EmbedAssembliesIntoApk>
+        
         <OutputType>Exe</OutputType>
         <UseMaui>true</UseMaui>
         <SingleProject>true</SingleProject>
@@ -20,10 +23,6 @@
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
-        <ApplicationIcon>Resources\AppIcon\mediawiki.ico</ApplicationIcon>
-        <Title>$(AssemblyName)</Title>
-        <Authors>Thomas Boutin</Authors>
-        <Version>5.0.0</Version>
 
         <GenerateTestArtifacts>True</GenerateTestArtifacts>
         <PublishTrimmed>true</PublishTrimmed>
@@ -41,7 +40,6 @@
         <DebugSymbols>false</DebugSymbols>
         <DebugType>None</DebugType>
     </PropertyGroup>
-
 
     <ItemGroup>
         <!-- App Icon -->
