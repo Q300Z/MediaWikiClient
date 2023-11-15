@@ -18,9 +18,7 @@
         <!-- Versions -->
         <ApplicationDisplayVersion>5.0</ApplicationDisplayVersion>
         <ApplicationVersion>5</ApplicationVersion>
-
-        <!--        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>-->
-        <!--        <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>-->
+        
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
         <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
         <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
@@ -32,10 +30,6 @@
         <Version>5.0.0</Version>
 
         <GenerateTestArtifacts>True</GenerateTestArtifacts>
-
-        <Configurations>Release;Debug</Configurations>
-        <Platforms>x64;arm64;</Platforms>
-        <PlatformTarget>x64;arm64;</PlatformTarget>
         <PublishTrimmed>true</PublishTrimmed>
         <SelfContained>true</SelfContained>
         <!--        <PublishSingleFile>true</PublishSingleFile>-->
@@ -45,33 +39,37 @@
 
     <ItemGroup>
         <!-- App Icon -->
-        <MauiIcon Include="Resources\AppIcon\mediawiki.svg" Color="#ffffff" BaseSize="16,16"/>
+        <MauiIcon Include="Resources\AppIcon\mediawiki.svg" Color="#ffffff" BaseSize="16,16" />
 
         <!-- Splash Screen -->
-        <MauiSplashScreen Include="Resources\Splash\mediawiki.svg" Color="#512BD4"
-                          BaseSize="96,96"/>
+        <MauiSplashScreen Include="Resources\Splash\mediawiki.svg" Color="#512BD4" BaseSize="96,96" />
 
         <!-- Images -->
         <MauiImage Include="Resources\Images\*"/>
         <MauiImage Update="Resources\Images\mediawiki.svg" BaseSize="168,168"/>
 
         <!-- Custom Fonts -->
-        <MauiFont Include="Resources\Fonts\*"/>
+        <MauiFont Include="Resources\Fonts\*" />
 
         <!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
-        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)"/>
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+        <None Remove="Resources\AppIcon\mediawiki.svg" />
+        <None Remove="Resources\Splash\wave_splashSplashScreen.svg" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Models\"/>
-        <Folder Include="Factories\"/>
-        <Folder Include="Services\"/>
+        <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.2" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Models\" />
+        <Folder Include="Factories\" />
+        <Folder Include="Services\" />
     </ItemGroup>
 
     <ItemGroup>
